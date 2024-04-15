@@ -1,0 +1,27 @@
+framework:
+    messenger:
+        failure_transport: failed
+        serializer:
+            default_serializer: messenger.transport.symfony_serializer
+            symfony_serializer:
+                format: json
+                context: { }
+        transports:
+            outside_receive:
+                dsn: "%env(MESSENGER_TRANSPORT_DSN_RABBITMQ)%"
+                options:
+                    exchange:
+                        name: pdfrator
+                    queues:
+                        pdfrator: ~
+                serializer: App\MessageHandler\Serializer\OutsideJsonMessageSerializer
+            inside:
+                dsn: "%env(MESSENGER_TRANSPORT_DSN_DOCTRINE)%"
+                options:
+                    queue_name: messages
+                    table_name: messenger_messages
+            failed:
+                dsn: 'doctrine://default'
+                options:
+                    queue_name: failed
+                    table_name: messenger_failed_messages

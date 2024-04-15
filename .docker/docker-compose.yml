@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+    server:
+        build:
+            context: ./server
+        volumes:
+            - ../:/app:cached
+        networks:
+            - pdf_network
+        working_dir: /app
+        ports:
+            - "8080:8000"
+        entrypoint: [ "bash", "-c", "symfony server:start"]
+        env_file:
+            - .env
+    workers:
+        build:
+            context: ./server
+        volumes:
+            - ../:/app:cached
+        networks:
+            - pdf_network
+        working_dir: /app
+        entrypoint: [ "bash", "-c", "php bin/console messenger:consume priority default"]
+    rabbitmq:
+        hostname: pdf_network
+        build:
+            context: ./rabbitmq
+        networks:
+            - pdf_network
+        volumes:
+            - ./rabbitmq/data:/var/lib/rabbitmq:rw,delegated
+        ports:
+            - "15671:15671"
+            - "15672:15672"
+    mysql:
+        build:
+            context: ./mysql
+        platform: linux/x86_64
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - ./mysql/data:/var/lib/mysql:rw,delegated
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        ports:
+            - "3306:3306"
+        networks:
+            - pdf_network
+    phpmyadmin:
+        image: phpmyadmin:5.0
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            PMA_HOST: mysql
+        restart: always
+        ports:
+            - "8081:80"
+        networks:
+            - pdf_network
+networks:
+    pdf_network:

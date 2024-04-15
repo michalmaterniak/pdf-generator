@@ -1,0 +1,25 @@
+{
+  "name": "commitm/pdfrator",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Michał Materniak"
+    }
+  ],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.3",
+    "symfony/framework-bundle": "7.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "CommitM\\PDFRator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CommitM\\PDFRatorTests\\": "tests/"
+    }
+  }
+}

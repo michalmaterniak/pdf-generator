@@ -1,0 +1,26 @@
+{
+  "name": "commitm/pdfrator-wkhtmltopdf",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Michał Materniak"
+    }
+  ],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.3",
+    "symfony/framework-bundle": "7.0.*",
+    "mikehaertl/phpwkhtmltopdf": "^2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CommitM\\PDFRator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CommitM\\PDFRatorTest\\": "tests/"
+    }
+  }
+}

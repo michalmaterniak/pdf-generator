@@ -1,0 +1,11 @@
+App\DTO\ContentPdfDto:
+  properties:
+    callback:
+      - NotBlank:
+          message: 'Callback nie może być pusty'
+      - NotNull:
+          message: 'Callback nie może być null'
+      - Url:
+          message: 'Callback musi być w formacie URL'
+    driver:
+      - App\Validator\DriverExists: ~
