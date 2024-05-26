@@ -14,15 +14,6 @@ services:
         entrypoint: [ "bash", "-c", "symfony server:start"]
         env_file:
             - .env
-    workers:
-        build:
-            context: ./server
-        volumes:
-            - ../:/app:cached
-        networks:
-            - pdf_network
-        working_dir: /app
-        entrypoint: [ "bash", "-c", "php bin/console messenger:consume priority default"]
     rabbitmq:
         hostname: pdf_network
         build:
