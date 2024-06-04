@@ -12,16 +12,15 @@ services:
         ports:
             - "8080:8000"
         entrypoint: [ "bash", "-c", "symfony server:start"]
-        env_file:
-            - .env
     rabbitmq:
         hostname: pdf_network
         build:
             context: ./rabbitmq
         networks:
             - pdf_network
-        env_file:
-            - .env
+        environment:
+            RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+            RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
         volumes:
             - ./rabbitmq/data:/var/lib/rabbitmq:rw,delegated
         ports:
