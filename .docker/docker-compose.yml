@@ -20,6 +20,8 @@ services:
             context: ./rabbitmq
         networks:
             - pdf_network
+        env_file:
+            - .env
         volumes:
             - ./rabbitmq/data:/var/lib/rabbitmq:rw,delegated
         ports:
@@ -36,7 +38,7 @@ services:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
         ports:
-            - "3306:3306"
+            - "3309:3306"
         networks:
             - pdf_network
     phpmyadmin:
