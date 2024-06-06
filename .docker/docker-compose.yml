@@ -23,9 +23,6 @@ services:
             RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
         volumes:
             - ./rabbitmq/data:/var/lib/rabbitmq:rw,delegated
-        ports:
-            - "15671:15671"
-            - "15672:15672"
     mysql:
         build:
             context: ./mysql
@@ -36,8 +33,6 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
-        ports:
-            - "3309:3306"
         networks:
             - pdf_network
     phpmyadmin:
